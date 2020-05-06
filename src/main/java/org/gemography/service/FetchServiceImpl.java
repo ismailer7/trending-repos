@@ -17,16 +17,21 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 @Service
-public class FetchService {
+public class FetchServiceImpl implements IFetchService {
 
 	@Bean
 	public RestTemplate restTemplate() {
 		return new RestTemplate();
 	}
 
-	@Autowired
 	private RestTemplate rest;
 	
+	@Autowired
+	public void setRestTemplate(RestTemplate rest) {
+		this.rest = rest;
+	}
+	
+	@Override
 	public Set<Repository> fetchAllTrendingReposLanguage() {
 		ResponseEntity<ResponseForLanguages> response = null;
 		ResponseForLanguages responseBean = null;
@@ -36,6 +41,7 @@ public class FetchService {
 		return repos;
 	}
 	
+	@Override
 	public Map<String, ResponseForRepos> fetchListOfReposUsedByLanguage(String lang, int page) {
 		Map<String, ResponseForRepos> data = new HashMap<>();
 		ResponseEntity<ResponseForRepos> response = null;

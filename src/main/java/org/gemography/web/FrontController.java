@@ -7,7 +7,7 @@ import java.util.Set;
 
 import org.gemography.bean.Repository;
 import org.gemography.bean.ResponseForRepos;
-import org.gemography.service.FetchService;
+import org.gemography.service.IFetchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class FrontController {
 
 	@Autowired
-	private FetchService fetchService;
+	private IFetchService fetchService;
 
 	@GetMapping("/languages")
 	public List<String> trendingLanguages() {
