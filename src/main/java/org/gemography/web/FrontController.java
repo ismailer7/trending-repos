@@ -21,17 +21,32 @@ public class FrontController {
 	@Autowired
 	private IFetchService fetchService;
 
+	/**
+	 * fetch most used languages for the 100 trending repos on github.
+	 * @return a list of languages
+	 */
 	@GetMapping("/languages")
 	public List<String> trendingLanguages() {
 		List<String> languages = convertToStringList(fetchService.fetchAllTrendingReposLanguage());
 		return languages;
 	}
-	
+
+	/**
+	 * fetch all repositories using some language
+	 * @param language the language 
+	 * @param page the page number
+	 * @return all repositories for the language requested
+	 */
 	@GetMapping("/language")
 	public Map<String, ResponseForRepos> languageDetails(@RequestParam String language, @RequestParam int page) {
 		return fetchService.fetchListOfReposUsedByLanguage(language, page);
 	}
 	
+	/**
+	 * convert a set of repositories to a list of languages.
+	 * @param repos a set of repositories
+	 * @return a list of languages
+	 */
 	private List<String> convertToStringList(Set<Repository> repos) {
 		List<String> languages = new ArrayList<>();
 		List<Repository> repoList = new ArrayList<>(repos);

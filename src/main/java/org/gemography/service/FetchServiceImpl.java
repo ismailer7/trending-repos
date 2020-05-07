@@ -31,6 +31,12 @@ public class FetchServiceImpl implements IFetchService {
 		this.rest = rest;
 	}
 	
+	
+	
+	/**
+	 * fetch the most used languages in 100 trending Repos on github.
+	 * @return Set of languages.
+	 */
 	@Override
 	public Set<Repository> fetchAllTrendingReposLanguage() {
 		ResponseEntity<ResponseForLanguages> response = null;
@@ -41,6 +47,12 @@ public class FetchServiceImpl implements IFetchService {
 		return repos;
 	}
 	
+	/**
+	 * fetch all repositories that use some specific language.
+	 * @param lang the language
+	 * @param page the page requested
+	 * @return the used repositories for some language.
+	 */
 	@Override
 	public Map<String, ResponseForRepos> fetchListOfReposUsedByLanguage(String lang, int page) {
 		Map<String, ResponseForRepos> data = new HashMap<>();
