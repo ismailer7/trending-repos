@@ -52,7 +52,7 @@ public class FrontController {
 		List<Repository> repoList = new ArrayList<>(repos);
 		for (Repository repo : repoList) {
 			if(repo.getLanguage() != null && !repo.getLanguage().isEmpty()) {
-				fetchService.fetchAllTrendingReposLanguage();
+				languages.add(repo.getLanguage());
 			}
 		}
 		return languages;
