@@ -13,24 +13,33 @@ import org.gemography.bean.RepositoryDetails;
 import org.gemography.bean.ResponseForLanguages;
 import org.gemography.bean.ResponseForRepos;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+@SpringBootTest
+@RunWith(MockitoJUnitRunner.class)
 public class FetchServiceTest {
-
-	private RestTemplate restMock = Mockito.mock(RestTemplate.class);;
-
-	ResponseEntity<ResponseForLanguages> responseMock = Mockito.mock(ResponseEntity.class);
 	
-	ResponseEntity<ResponseForRepos> responseMockRepo = Mockito.mock(ResponseEntity.class);
+	@Mock
+	private RestTemplate restMock;
 
-	private FetchServiceImpl service = new FetchServiceImpl();
+	@Mock
+	ResponseEntity<ResponseForLanguages> responseMock;
+	
+	@Mock
+	ResponseEntity<ResponseForRepos> responseMockRepo;
+	
+	@InjectMocks
+	private FetchServiceImpl service;
 
 	
 	@Test
 	public void fetchAllTrendingRepoLanguageTest() {
-		service.setRestTemplate(restMock);
 		ResponseForLanguages simulateResponse = new ResponseForLanguages();
 		List<Repository> repositories = Arrays.asList(new Repository("java"), new Repository("python"),
 				new Repository("Go"));
@@ -43,7 +52,6 @@ public class FetchServiceTest {
 
 	@Test
 	public void fetchListOfReposUsedByLanguageTest() {
-		service.setRestTemplate(restMock);
 		ResponseForRepos simulateResponse = new ResponseForRepos();
 		simulateResponse.setTotal_count(123456);
 		List<RepositoryDetails> repositoryDetailsList = Arrays.asList(
