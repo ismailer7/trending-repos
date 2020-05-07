@@ -1,9 +1,13 @@
 package org.gemography.service;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.gemography.bean.Repository;
 import org.gemography.bean.ResponseForLanguages;
@@ -45,7 +49,7 @@ public class FetchServiceImpl implements IFetchService {
 	public Set<Repository> fetchAllTrendingReposLanguage() {
 		ResponseEntity<ResponseForLanguages> response = null;
 		ResponseForLanguages responseBean = null;
-		response = rest.exchange("https://api.github.com/search/repositories?q=created:>2020-04-06&sort=stars&order=desc&page=1&per_page=100", HttpMethod.GET, generateHeaderEntity(), ResponseForLanguages.class);
+		response = rest.exchange("https://api.github.com/search/repositories?q=created:>" + simplifyDate() + "&sort=stars&order=desc&page=1&per_page=100", HttpMethod.GET, generateHeaderEntity(), ResponseForLanguages.class);
 		responseBean = response.getBody();
 		Set<Repository> repos = new HashSet<>(responseBean.getItems());
 		return repos;
@@ -78,9 +82,70 @@ public class FetchServiceImpl implements IFetchService {
 	private HttpEntity<String> generateHeaderEntity() {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
-		headers.add("Authorization", " token " + token);
+		headers.add("X-Auth-Token", " token " + token);
 		HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
 		return entity;
+	}
+	
+	private String simplifyDate() {
+		// "dow mon dd hh:mm:ss zzz yyyy"
+		Pattern pattern = Pattern.compile("([a-zA-Z]{3}) ([a-zA-Z]{3}) (\\d{2}) (\\d{2}:\\d{2}:\\d{2}) ([a-zA-Z]{3,}) (\\d{4})$");
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.MONTH, -1); // before 1 month
+		Date date = cal.getTime();
+		Matcher matcher = pattern.matcher(date.toString());
+		String month = "";
+		String day = "";
+		String year = "";
+		if(matcher.matches()) {
+			month = getMonth(matcher.group(2));
+			day = matcher.group(3);
+			year = matcher.group(6);
+		}
+		return year + "-" + month + "-" + day;
+	}
+	
+	private String getMonth(String month) {
+		String m = "";
+		switch(month) {
+			case "Jan":
+				m = "01";
+				break;
+			case "Feb":
+				m = "02";
+				break;
+			case "Mar":
+				m = "03";
+				break;
+			case "Apr":
+				m = "04";
+				break;
+			case "May":
+				m = "05";
+				break;
+			case "Jun":
+				m = "06";
+				break;
+			case "Jul":
+				m = "07";
+				break;
+			case "Aug":
+				m = "08";
+				break;
+			case "Sep":
+				m = "09";
+				break;
+			case "Oct":
+				m = "10";
+				break;
+			case "Nov":
+				m = "11";
+				break;
+			case "Dec":
+				m = "12";
+				break;
+		}
+		return m;
 	}
 	
 }
