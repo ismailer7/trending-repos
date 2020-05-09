@@ -65,7 +65,7 @@ public class FetchServiceTest {
 	@Test
 	public void fetchListOfReposUsedByLanguageTest() {
 		TrendingReposResponse simulateResponse = new TrendingReposResponse();
-		simulateResponse.setTotal_count(123456);
+		simulateResponse.setTotalCount(123456);
 		List<TredningRepoDetails> repositoryDetailsList = Arrays.asList(new TredningRepoDetails(1234, "name1", 1452),
 				new TredningRepoDetails(1478, "name2", 12), new TredningRepoDetails(9632, "name3", 124));
 		simulateResponse.setItems(repositoryDetailsList);
@@ -89,13 +89,13 @@ public class FetchServiceTest {
 		assertEquals("1", simulateResponse.getCurrentPage());
 		assertEquals("2", simulateResponse.getNextPage());
 		assertNull(simulateResponse.getPreviousPage());
-		assertNotEquals(0, simulateResponse.getTotal_count());
+		assertNotEquals(0, simulateResponse.getTotalCount());
 	}
 	
 	@Test
 	public void fetchListOfReposUsedByLanguageTestPageZero() {
 		TrendingReposResponse simulateResponse = new TrendingReposResponse();
-		simulateResponse.setTotal_count(123456);
+		simulateResponse.setTotalCount(123456);
 		List<TredningRepoDetails> repositoryDetailsList = Arrays.asList(new TredningRepoDetails(1234, "name1", 1452),
 				new TredningRepoDetails(1478, "name2", 12), new TredningRepoDetails(9632, "name3", 124));
 		simulateResponse.setItems(repositoryDetailsList);
@@ -119,13 +119,13 @@ public class FetchServiceTest {
 		assertEquals("1", simulateResponse.getCurrentPage());
 		assertEquals("2", simulateResponse.getNextPage());
 		assertNull(simulateResponse.getPreviousPage());
-		assertNotEquals(0, simulateResponse.getTotal_count());
+		assertNotEquals(0, simulateResponse.getTotalCount());
 	}
 	
 	@Test
 	public void fetchListOfReposUsedByLanguageTestPageGreaterThanOne() {
 		TrendingReposResponse simulateResponse = new TrendingReposResponse();
-		simulateResponse.setTotal_count(123456);
+		simulateResponse.setTotalCount(123456);
 		List<TredningRepoDetails> repositoryDetailsList = Arrays.asList(new TredningRepoDetails(1234, "name1", 1452),
 				new TredningRepoDetails(1478, "name2", 12), new TredningRepoDetails(9632, "name3", 124));
 		simulateResponse.setItems(repositoryDetailsList);
@@ -149,7 +149,7 @@ public class FetchServiceTest {
 		assertEquals("10", simulateResponse.getCurrentPage());
 		assertEquals("11", simulateResponse.getNextPage());
 		assertEquals("9", simulateResponse.getPreviousPage());
-		assertNotEquals(0, simulateResponse.getTotal_count());
+		assertNotEquals(0, simulateResponse.getTotalCount());
 	}
 
 }

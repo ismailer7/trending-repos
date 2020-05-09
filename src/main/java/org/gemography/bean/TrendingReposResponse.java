@@ -1,5 +1,7 @@
 package org.gemography.bean;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,7 +9,8 @@ public class TrendingReposResponse extends Response<TredningRepoDetails> {
 	
 	@Setter
 	@Getter
-	private long total_count;
+	@JsonProperty("total_count")
+	private long totalCount;
 	
 	@Setter
 	@Getter
