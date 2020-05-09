@@ -3,7 +3,7 @@ package org.gemography.bean;
 import lombok.Getter;
 import lombok.Setter;
 
-public class ResponseForRepos extends Response<RepositoryDetails> {
+public class TrendingReposResponse extends Response<TredningRepoDetails> {
 	
 	@Setter
 	@Getter

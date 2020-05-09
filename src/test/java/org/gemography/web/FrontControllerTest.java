@@ -9,7 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.HashSet;
 import java.util.Set;
 
-import org.gemography.bean.Repository;
+import org.gemography.bean.TrendingLanguageDetails;
 import org.gemography.service.FetchServiceImpl;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -39,10 +39,10 @@ public class FrontControllerTest {
 	@Test
 	@Ignore
 	public void trendingLanguagesTest() throws Exception {
-		Set<Repository> repositorySet = new HashSet<>();
-		repositorySet.add(new Repository("java"));
-		repositorySet.add(new Repository("python"));
-		repositorySet.add(new Repository("kotlin"));
+		Set<TrendingLanguageDetails> repositorySet = new HashSet<>();
+		repositorySet.add(new TrendingLanguageDetails("java"));
+		repositorySet.add(new TrendingLanguageDetails("python"));
+		repositorySet.add(new TrendingLanguageDetails("kotlin"));
 		when(service.fetchAllTrendingReposLanguage()).thenReturn(repositorySet);
 		this.mockMvc
 				.perform(get("/repos/trending/languages")).andDo(print())

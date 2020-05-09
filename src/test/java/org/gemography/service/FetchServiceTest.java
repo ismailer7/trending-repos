@@ -8,10 +8,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import org.gemography.bean.Repository;
-import org.gemography.bean.RepositoryDetails;
-import org.gemography.bean.ResponseForLanguages;
-import org.gemography.bean.ResponseForRepos;
+import org.gemography.bean.TrendingLanguageDetails;
+import org.gemography.bean.TredningRepoDetails;
+import org.gemography.bean.TrendingLanguageResponse;
+import org.gemography.bean.TrendingReposResponse;
 import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -34,10 +34,10 @@ public class FetchServiceTest {
 	private RestTemplate restMock;
 
 	@Mock
-	ResponseEntity<ResponseForLanguages> responseMock;
+	ResponseEntity<TrendingLanguageResponse> responseMock;
 	
 	@Mock
-	ResponseEntity<ResponseForRepos> responseMockRepo;
+	ResponseEntity<TrendingReposResponse> responseMockRepo;
 	
 	@InjectMocks
 	private FetchServiceImpl service;
@@ -46,11 +46,11 @@ public class FetchServiceTest {
 	@Test
 	@Ignore
 	public void fetchAllTrendingRepoLanguageTest() {
-		ResponseForLanguages simulateResponse = new ResponseForLanguages();
-		List<Repository> repositories = Arrays.asList(new Repository("java"), new Repository("python"),
-				new Repository("Go"));
+		TrendingLanguageResponse simulateResponse = new TrendingLanguageResponse();
+		List<TrendingLanguageDetails> repositories = Arrays.asList(new TrendingLanguageDetails("java"), new TrendingLanguageDetails("python"),
+				new TrendingLanguageDetails("Go"));
 		simulateResponse.setItems(repositories);
-		when(restMock.getForEntity("https://api.github.com/search/repositories?q=created:>2020-04-06&sort=stars&order=desc&page=1&per_page=100", ResponseForLanguages.class)).thenReturn(responseMock);
+		when(restMock.getForEntity("https://api.github.com/search/repositories?q=created:>2020-04-06&sort=stars&order=desc&page=1&per_page=100", TrendingLanguageResponse.class)).thenReturn(responseMock);
 		when(responseMock.getBody()).thenReturn(simulateResponse);
 		assertNotNull(service.fetchAllTrendingReposLanguage());
 		assertEquals(3, service.fetchAllTrendingReposLanguage().size());
@@ -59,18 +59,18 @@ public class FetchServiceTest {
 	@Test
 	@Ignore
 	public void fetchListOfReposUsedByLanguageTest() {
-		ResponseForRepos simulateResponse = new ResponseForRepos();
+		TrendingReposResponse simulateResponse = new TrendingReposResponse();
 		simulateResponse.setTotal_count(123456);
-		List<RepositoryDetails> repositoryDetailsList = Arrays.asList(
-				new RepositoryDetails(1234, "name1", 1452),
-				new RepositoryDetails(1478, "name2", 12),
-				new RepositoryDetails(9632, "name3", 124)
+		List<TredningRepoDetails> repositoryDetailsList = Arrays.asList(
+				new TredningRepoDetails(1234, "name1", 1452),
+				new TredningRepoDetails(1478, "name2", 12),
+				new TredningRepoDetails(9632, "name3", 124)
 		);
 		simulateResponse.setItems(repositoryDetailsList);
 		
-		when(restMock.getForEntity("https://api.github.com/search/repositories?q=language:java&sort=stars&order=desc&page=1", ResponseForRepos.class)).thenReturn(responseMockRepo);
+		when(restMock.getForEntity("https://api.github.com/search/repositories?q=language:java&sort=stars&order=desc&page=1", TrendingReposResponse.class)).thenReturn(responseMockRepo);
 		when(responseMockRepo.getBody()).thenReturn(simulateResponse);
-		Map<String, ResponseForRepos> result = service.fetchListOfReposUsedByLanguage("java", 1);
+		Map<String, TrendingReposResponse> result = service.fetchListOfReposUsedByLanguage("java", 1);
 		assertNotNull(result);
 		assertEquals(1, result.keySet().size()); 
 		assertEquals(3, result.get("java").getItems().size());

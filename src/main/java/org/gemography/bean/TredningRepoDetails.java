@@ -7,8 +7,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Repository {
+public class TredningRepoDetails {
 
-	private String language;
+	private long id;
+	private String name;
+	private long watchers;
 	
 }

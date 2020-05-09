@@ -3,13 +3,13 @@ package org.gemography.service;
 import java.util.Map;
 import java.util.Set;
 
-import org.gemography.bean.Repository;
-import org.gemography.bean.ResponseForRepos;
+import org.gemography.bean.TrendingLanguageDetails;
+import org.gemography.bean.TrendingReposResponse;
 
 public interface IFetchService {
 	
-	Set<Repository> fetchAllTrendingReposLanguage();
+	Set<TrendingLanguageDetails> fetchAllTrendingReposLanguage();
 	
-	Map<String, ResponseForRepos> fetchListOfReposUsedByLanguage(String lang, int page);
+	Map<String, TrendingReposResponse> fetchListOfReposUsedByLanguage(String lang, int page);
 
 }

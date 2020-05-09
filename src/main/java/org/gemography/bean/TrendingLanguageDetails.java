@@ -7,10 +7,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class RepositoryDetails {
+public class TrendingLanguageDetails {
 
-	private long id;
-	private String name;
-	private long watchers;
+	private String language;
 	
 }

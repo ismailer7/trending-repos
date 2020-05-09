@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.gemography.bean.Repository;
-import org.gemography.bean.ResponseForRepos;
+import org.gemography.bean.TrendingLanguageDetails;
+import org.gemography.bean.TrendingReposResponse;
 import org.gemography.service.IFetchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,7 +38,7 @@ public class FrontController {
 	 * @return all repositories for the language requested
 	 */
 	@GetMapping("/language")
-	public Map<String, ResponseForRepos> languageDetails(@RequestParam String language, @RequestParam int page) {
+	public Map<String, TrendingReposResponse> languageDetails(@RequestParam String language, @RequestParam int page) {
 		return fetchService.fetchListOfReposUsedByLanguage(language, page);
 	}
 	
@@ -47,10 +47,10 @@ public class FrontController {
 	 * @param repos a set of repositories
 	 * @return a list of languages
 	 */
-	private List<String> convertToStringList(Set<Repository> repos) {
+	private List<String> convertToStringList(Set<TrendingLanguageDetails> repos) {
 		List<String> languages = new ArrayList<>();
-		List<Repository> repoList = new ArrayList<>(repos);
-		for (Repository repo : repoList) {
+		List<TrendingLanguageDetails> repoList = new ArrayList<>(repos);
+		for (TrendingLanguageDetails repo : repoList) {
 			if(repo.getLanguage() != null && !repo.getLanguage().isEmpty()) {
 				languages.add(repo.getLanguage());
 			}

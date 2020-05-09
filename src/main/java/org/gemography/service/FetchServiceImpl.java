@@ -9,9 +9,9 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.gemography.bean.Repository;
-import org.gemography.bean.ResponseForLanguages;
-import org.gemography.bean.ResponseForRepos;
+import org.gemography.bean.TrendingLanguageDetails;
+import org.gemography.bean.TrendingLanguageResponse;
+import org.gemography.bean.TrendingReposResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -47,15 +47,15 @@ public class FetchServiceImpl implements IFetchService {
 	 * @return Set of languages.
 	 */
 	@Override
-	public Set<Repository> fetchAllTrendingReposLanguage() {
-		ResponseEntity<ResponseForLanguages> response = null;
-		ResponseForLanguages responseBean = null;
+	public Set<TrendingLanguageDetails> fetchAllTrendingReposLanguage() {
+		ResponseEntity<TrendingLanguageResponse> response = null;
+		TrendingLanguageResponse responseBean = null;
 		response = rest.exchange(
 				"https://api.github.com/search/repositories?q=created:>" + simplifyDate()
 						+ "&sort=stars&order=desc&page=1&per_page=100",
-				HttpMethod.GET, generateHeaderEntity(), ResponseForLanguages.class);
+				HttpMethod.GET, generateHeaderEntity(), TrendingLanguageResponse.class);
 		responseBean = response.getBody();
-		Set<Repository> repos = new HashSet<>(responseBean.getItems());
+		Set<TrendingLanguageDetails> repos = new HashSet<>(responseBean.getItems());
 		return repos;
 	}
 
@@ -67,15 +67,15 @@ public class FetchServiceImpl implements IFetchService {
 	 * @return the used repositories for some language.
 	 */
 	@Override
-	public Map<String, ResponseForRepos> fetchListOfReposUsedByLanguage(String lang, int page) {
-		Map<String, ResponseForRepos> data = new HashMap<>();
-		ResponseEntity<ResponseForRepos> response = null;
-		ResponseForRepos responseBean = null;
+	public Map<String, TrendingReposResponse> fetchListOfReposUsedByLanguage(String lang, int page) {
+		Map<String, TrendingReposResponse> data = new HashMap<>();
+		ResponseEntity<TrendingReposResponse> response = null;
+		TrendingReposResponse responseBean = null;
 		response = rest
 				.exchange(
 						"https://api.github.com/search/repositories?q=language:" + lang + "&sort=stars&order=desc&page="
 								+ (page == 0 ? 1 : page),
-						HttpMethod.GET, generateHeaderEntity(), ResponseForRepos.class);
+						HttpMethod.GET, generateHeaderEntity(), TrendingReposResponse.class);
 		responseBean = response.getBody();
 		responseBean.setCurrentPage((page == 0) ? "1" : String.valueOf(page));
 		responseBean
