@@ -91,5 +91,65 @@ public class FetchServiceTest {
 		assertNull(simulateResponse.getPreviousPage());
 		assertNotEquals(0, simulateResponse.getTotal_count());
 	}
+	
+	@Test
+	public void fetchListOfReposUsedByLanguageTestPageZero() {
+		TrendingReposResponse simulateResponse = new TrendingReposResponse();
+		simulateResponse.setTotal_count(123456);
+		List<TredningRepoDetails> repositoryDetailsList = Arrays.asList(new TredningRepoDetails(1234, "name1", 1452),
+				new TredningRepoDetails(1478, "name2", 12), new TredningRepoDetails(9632, "name3", 124));
+		simulateResponse.setItems(repositoryDetailsList);
+
+		String lang = "java";
+		int page = 0;
+
+		when(restMock.exchange(
+				"https://api.github.com/search/repositories?q=language:" + lang + "&sort=stars&order=desc&page=1",
+				HttpMethod.GET, service.generateHeaderEntity(), TrendingReposResponse.class))
+						.thenReturn(responseMockRepo);
+		when(responseMockRepo.getBody()).thenReturn(simulateResponse);
+		Map<String, TrendingReposResponse> result = service.fetchListOfReposUsedByLanguage(lang, page);
+		assertNotNull(result);
+		assertEquals(1, result.keySet().size());
+		assertEquals(3, result.get("java").getItems().size());
+		assertEquals("name1", result.get("java").getItems().get(0).getName());
+		assertEquals("name2", result.get("java").getItems().get(1).getName());
+		assertEquals("name3", result.get("java").getItems().get(2).getName());
+
+		assertEquals("1", simulateResponse.getCurrentPage());
+		assertEquals("2", simulateResponse.getNextPage());
+		assertNull(simulateResponse.getPreviousPage());
+		assertNotEquals(0, simulateResponse.getTotal_count());
+	}
+	
+	@Test
+	public void fetchListOfReposUsedByLanguageTestPageGreaterThanOne() {
+		TrendingReposResponse simulateResponse = new TrendingReposResponse();
+		simulateResponse.setTotal_count(123456);
+		List<TredningRepoDetails> repositoryDetailsList = Arrays.asList(new TredningRepoDetails(1234, "name1", 1452),
+				new TredningRepoDetails(1478, "name2", 12), new TredningRepoDetails(9632, "name3", 124));
+		simulateResponse.setItems(repositoryDetailsList);
+
+		String lang = "java";
+		int page = 10;
+
+		when(restMock.exchange(
+				"https://api.github.com/search/repositories?q=language:" + lang + "&sort=stars&order=desc&page=10",
+				HttpMethod.GET, service.generateHeaderEntity(), TrendingReposResponse.class))
+						.thenReturn(responseMockRepo);
+		when(responseMockRepo.getBody()).thenReturn(simulateResponse);
+		Map<String, TrendingReposResponse> result = service.fetchListOfReposUsedByLanguage(lang, page);
+		assertNotNull(result);
+		assertEquals(1, result.keySet().size());
+		assertEquals(3, result.get("java").getItems().size());
+		assertEquals("name1", result.get("java").getItems().get(0).getName());
+		assertEquals("name2", result.get("java").getItems().get(1).getName());
+		assertEquals("name3", result.get("java").getItems().get(2).getName());
+
+		assertEquals("10", simulateResponse.getCurrentPage());
+		assertEquals("11", simulateResponse.getNextPage());
+		assertEquals("9", simulateResponse.getPreviousPage());
+		assertNotEquals(0, simulateResponse.getTotal_count());
+	}
 
 }

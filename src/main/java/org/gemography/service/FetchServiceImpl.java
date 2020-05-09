@@ -114,11 +114,10 @@ public class FetchServiceImpl implements IFetchService {
 		String month = "";
 		String day = "";
 		String year = "";
-		if (matcher.matches()) {
-			month = getMonth(matcher.group(2));
-			day = matcher.group(3);
-			year = matcher.group(6);
-		}
+		matcher.matches();
+		month = getMonth(matcher.group(2));
+		day = matcher.group(3);
+		year = matcher.group(6);
 		return year + "-" + month + "-" + day;
 	}
 
