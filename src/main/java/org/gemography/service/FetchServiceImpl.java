@@ -105,7 +105,6 @@ public class FetchServiceImpl implements IFetchService {
 	 * @return simplified date string before one month.
 	 */
 	private String simplifyDate() {
-		// "dow mon dd hh:mm:ss zzz yyyy"
 		Pattern pattern = Pattern
 				.compile("([a-zA-Z]{3}) ([a-zA-Z]{3}) (\\d{2}) (\\d{2}:\\d{2}:\\d{2}) ([a-zA-Z]{3,}) (\\d{4})$");
 		Calendar cal = Calendar.getInstance();
