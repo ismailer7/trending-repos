@@ -1,6 +1,0 @@
-server:
-    port: 8082
-org:
-   github:
-      api:
-         token: c5b0656e34c50b3dcebdf9dcb078b3672efb8892

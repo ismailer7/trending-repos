@@ -78,7 +78,6 @@
 						<exclude>org/gemography/TrendingReposApplication</exclude>
 						<exclude>org/gemography/bean/*</exclude>
 						<exclude>org/gemography/config/*</exclude>
-						<exclude>*Test</exclude>
 					</excludes>
 				</configuration>
 

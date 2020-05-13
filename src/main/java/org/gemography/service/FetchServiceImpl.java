@@ -1,5 +1,6 @@
 package org.gemography.service;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -38,7 +39,7 @@ public class FetchServiceImpl implements IFetchService {
 		this.rest = rest;
 	}
 
-	@Value("${org.github.api.token}")
+	@Value("${github.token}")
 	private String token;
 
 	/**
@@ -85,7 +86,7 @@ public class FetchServiceImpl implements IFetchService {
 		data.put(lang, responseBean);
 		return data;
 	}
-
+	
 	/**
 	 * generate HEader Entity for the Get request
 	 * 
