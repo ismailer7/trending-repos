@@ -7,7 +7,7 @@ A Spring boot Microservice which enable Retrieving information about Trending Re
 This Project is going to make use of Maven and Docker, so make sure those two tools are installed on your machine.
 
 
-1 - clone this porjet into you local machine
+1 - clone this porject into your local machine.
 
 ```
 git clone https://github.com/ismailer7/trending-repos
