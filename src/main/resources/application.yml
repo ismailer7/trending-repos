@@ -1,4 +1,4 @@
 server:
-    port: 8082
+    port: 8081
 github:
    token: "c5b0656e34c50b3dcebdf9dcb078b3672efb8892"
