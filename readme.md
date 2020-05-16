@@ -37,7 +37,7 @@ docker run -p 8081:8081 -t trending-repos-docker
 
 the documentation is generated using swagger library
 
-you can access to the documentation of our End poits from the below url
+you can access to the documentation of our End points from the below url
 
 ```
 http://localhost:8081/swagger-ui.html
@@ -60,7 +60,7 @@ Example: java
 ```
 
 ```
-http://localhost:8081/repos/trending/language?langiage=java&page=1
+http://localhost:8081/repos/trending/language?language=java&page=1
 ```
 
 ![alt text](https://github.com/ismailer7/trending-repos/blob/master/src/main/resources/static/image-2.PNG?raw=true)
